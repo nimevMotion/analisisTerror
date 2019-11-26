@@ -70,17 +70,15 @@ def heatmapPlot(doc,i):
             polaridad=polaridad+float(sentimentData.at[token.text,"INTENSITY"])
             tampolaridad=tampolaridad+1
                         
-        #bookData=pd.DataFrame(coleccion)
+        bookData=pd.DataFrame(coleccion)
         totTokens=totTokens+1
         
     datos["intensity"]=polaridad
     datos["tam_intensity"]=tampolaridad
     datos["tokens"]=totTokens
-# =============================================================================
-#     plt.figure(figsize=(50,5))
-#     sb.heatmap(bookData,vmin=-1, vmax=1,xticklabels=False,yticklabels=False,center=0,cmap="coolwarm").set_title(nomPNG)
-#     plt.savefig(nomPNG)
-# =============================================================================
+    plt.figure(figsize=(50,5))
+    sb.heatmap(bookData,vmin=-1, vmax=1,xticklabels=False,yticklabels=False,center=0,cmap="coolwarm").set_title(nomPNG)
+    plt.savefig(nomPNG)
 
 def sentimentPlot(doc,i):
     global affectIntensityData
@@ -143,14 +141,12 @@ def sentimentPlot(doc,i):
     datos["tam_sadness"]=tamsadness
     data={"SCORE":score,"AFFECT":affect}   
     bookD=pd.DataFrame(data)
-# =============================================================================
-#     sb.set(style='darkgrid')
-#     try:
-#         sb.scatterplot(y = "SCORE", x = bookD.index.values,hue="AFFECT", data=bookD)
-#     except(RuntimeError, TypeError, NameError) as e:
-#         print(e)    
-#     plt.savefig(nomPNG)
-# =============================================================================
+    sb.set(style='darkgrid')
+    try:
+        sb.scatterplot(y = "SCORE", x = bookD.index.values,hue="AFFECT", data=bookD)
+    except(RuntimeError, TypeError, NameError) as e:
+        print(e)    
+    plt.savefig(nomPNG)
     
     
 def scatterPlot(doc,i):
@@ -167,12 +163,10 @@ def scatterPlot(doc,i):
             aux={'INTENSITY':sentimentData.at[token.text,"INTENSITY"]}
             bookData = bookData.append(aux, ignore_index=True)
             
-# =============================================================================
-#     plt.figure(figsize=(50,5))
-#     sb.set(style='darkgrid')
-#     sb.scatterplot(x = bookData.index.values, y = "INTENSITY", data=bookData)
-#     plt.savefig(nomPNG)
-# =============================================================================
+    plt.figure(figsize=(50,5))
+    sb.set(style='darkgrid')
+    sb.scatterplot(x = bookData.index.values, y = "INTENSITY", data=bookData)
+    plt.savefig(nomPNG)
 
 if __name__ == "__main__":
     main()    
