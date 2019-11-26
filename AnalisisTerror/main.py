@@ -32,25 +32,35 @@ def main():
         book=obtenerW(rutas[i])
         doc = nlp(book)
         heatmapPlot(doc,i)
-        #scatterPlot(doc,i)
+        scatterPlot(doc,i)
         sentimentPlot(doc,i)
+        print(datos)
         
         if datos["tam_intensity"]>0:
             print("El libro "+books[i]+" es POSITIVO")
         else:
             print("El libro "+books[i]+" es NEGATIVO") 
-         
+
+#================================================================================================
+#La función obtenerW obtiene el texto sin procesar
+#================================================================================================
 def obtenerW(book):
     rawTxt = open(book,encoding='utf-8')
     text = rawTxt.read()
     return text
 
+#================================================================================================
+#La función obtener nombre, regresa el nombre del libro para identificar la gráficas
+#================================================================================================
 def obtenerNombre(ruta):
     posSeparador=ruta.rfind("\\")
     posUltima=ruta.rfind(".")
     nombre=ruta[posSeparador+1:posUltima]
     return nombre
 
+#================================================================================================
+#La función heatmapPlot dibuja el mapa de calor de la polaridad de las palabras
+#================================================================================================
 def heatmapPlot(doc,i):
     global sentimentData
     global books
@@ -80,6 +90,9 @@ def heatmapPlot(doc,i):
     sb.heatmap(bookData,vmin=-1, vmax=1,xticklabels=False,yticklabels=False,center=0,cmap="coolwarm").set_title(nomPNG)
     plt.savefig(nomPNG)
 
+#================================================================================================
+#La función sentimentPlotr, dibuja la gráfica con el desglose de emociones
+#================================================================================================
 def sentimentPlot(doc,i):
     global affectIntensityData
     global sentimentData
@@ -148,7 +161,9 @@ def sentimentPlot(doc,i):
         print(e)    
     plt.savefig(nomPNG)
     
-    
+#================================================================================================
+#La función scatterPlot dibuja la polaridad del texto
+#================================================================================================
 def scatterPlot(doc,i):
     global sentimentData
     global books
@@ -169,11 +184,4 @@ def scatterPlot(doc,i):
     plt.savefig(nomPNG)
 
 if __name__ == "__main__":
-    main()    
-
-    
-    
-
-    
-
-
+    main()
